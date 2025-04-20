@@ -4,6 +4,10 @@ const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 
+app.get('/', (req, res) => {
+    res.send('API Kas UMKM Aktif 🚀');
+  });  
+
 dotenv.config();
 const app = express();
 app.use(express.json());
