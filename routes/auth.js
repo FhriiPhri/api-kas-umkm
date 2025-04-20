@@ -11,11 +11,11 @@ const router = express.Router();
  */
 router.post('/register', async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { nama, username, jurusan, email, password } = req.body;
 
     // 1. Cek apakah semua field terisi
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: 'Username, email, dan password wajib diisi.' });
+    if (!nama || !username || !jurusan || !email || !password) {
+      return res.status(400).json({ message: 'Nama, username, jurusan, email, dan password wajib diisi.' });
     }
 
     // 2. Cek apakah email sudah terdaftar
@@ -30,7 +30,9 @@ router.post('/register', async (req, res) => {
     // 4. Simpan user baru
     const user = await prisma.user.create({
       data: {
+        nama,
         username,
+        jurusan,
         email,
         password: hashed
       }
@@ -41,7 +43,9 @@ router.post('/register', async (req, res) => {
       message: 'User berhasil register.',
       user: {
         id:       user.id,
+        nama:     user.nama,
         username: user.username,
+        jurusan:  user.jurusan,
         email:    user.email,
         createdAt: user.createdAt
       }
