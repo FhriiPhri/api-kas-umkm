@@ -1,18 +1,25 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth');
+const path = require('path');
 
-dotenv.config();
 const app = express();
+
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-    res.send('API Kas UMKM Aktif 🚀');
-  });  
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-// public routes
-app.use('/api', authRoutes);
+// Routes
+const authRouter = require('./routes/auth');
+app.use('/', authRouter);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Handle 404
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
