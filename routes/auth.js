@@ -92,6 +92,23 @@ router.post('/login', async (req, res) => {
       console.error('Login error:', error);
       res.status(500).json({ message: 'Terjadi kesalahan server.' });
     }
-  });  
+}); 
 
+  router.get('/users', async (req, res) => {
+    try {
+      const users = await prisma.user.findMany({
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          createdAt: true
+        }
+      });
+      res.json({ users });
+    } catch (error) {
+      console.error('Get all users error:', error);
+      res.status(500).json({ message: 'Terjadi kesalahan server.' });
+    }
+  });
+  
 module.exports = router;
