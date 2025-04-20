@@ -1,4 +1,3 @@
-// middleware/auth.js
 const jwt = require('jsonwebtoken');
 module.exports = function authenticateToken(req, res, next) {
   // ambil header Authorization: Bearer <token>
