@@ -7,7 +7,8 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node nodemon index.js",
-    "prisma": "prisma"
+    "prisma": "prisma",
+    "vercel-build": "prisma generate"
   },
   "keywords": [],
   "author": "",
