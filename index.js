@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const db = require('./config/db'); // koneksi DB
 const transactionsRoute = require('./routes/transactionRoutes'); // route transaksi
+const userRoutes = require('./routes/userRoutes'); // route transaksi
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
