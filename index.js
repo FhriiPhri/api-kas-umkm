@@ -4,6 +4,7 @@ const app = express();
 const db = require('./config/db'); // koneksi DB
 const transactionsRoute = require('./routes/transactionRoutes'); // route transaksi
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Root route
