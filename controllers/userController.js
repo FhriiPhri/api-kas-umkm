@@ -1,34 +1,26 @@
 const User = require('../models/User');
 
-exports.register = async (req, res) => {
+// Fungsi untuk mendaftarkan pengguna baru
+const register = async (userData) => {
+  // Bisa tambahkan validasi atau hash password di sini
   try {
-    const { username, email, password, name } = req.body;
-
-    // Cek apakah email atau username sudah ada
-    const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) {
-      return res.status(400).json({ error: 'Email sudah terdaftar' });
-    }
-
-    // Buat user baru
-    const user = await User.create({
-      username,
-      email,
-      password,
-      name
-    });
-
-    res.status(201).json({
-      message: 'User berhasil didaftarkan',
-      user: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-        name: user.name,
-      }
-    });
+    const newUser = await User.create(userData); // Menyimpan user baru ke database
+    return newUser;
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    throw new Error('Error saat mendaftarkan pengguna');
   }
+};
+
+// Fungsi untuk mengambil semua pengguna
+const getAllUsers = async () => {
+  try {
+    return await User.findAll();
+  } catch (error) {
+    throw new Error('Error mengambil data pengguna');
+  }
+};
+
+module.exports = {
+  register,
+  getAllUsers,
 };
