@@ -1,18 +1,34 @@
+require('dotenv').config();
 const express = require('express');
-const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth');
-
-dotenv.config();
 const app = express();
+const db = require('./config/db'); // koneksi DB
+const transactionsRoute = require('./routes/transactionRoutes'); // route transaksi
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
+// Root route
 app.get('/', (req, res) => {
-    res.send('API Kas UMKM Aktif 🚀');
-  });  
+  res.send('API UMKM Kas Online ✅');
+});
 
-// public routes
-app.use('/api', authRoutes);
+// Gunakan routes transaksi
+app.use('/api/transactions', transactionsRoute);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Coba koneksi ke database
+db.authenticate()
+  .then(() => {
+    console.log('✅ Database connected');
+    return db.sync(); // sinkronisasi model dengan DB
+  })
+  .then(() => {
+    console.log('✅ Database synced');
+  })
+  .catch((err) => {
+    console.error('❌ Failed to connect DB:', err);
+  });
+
+// Jalankan server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+});
