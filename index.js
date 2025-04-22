@@ -12,6 +12,9 @@ app.get('/', (req, res) => {
   res.send('API UMKM Kas Online ✅');
 });
 
+// Route
+app.use('/api/users', userRoutes);
+
 // Gunakan routes transaksi
 app.use('/api/transactions', transactionsRoute);
 
