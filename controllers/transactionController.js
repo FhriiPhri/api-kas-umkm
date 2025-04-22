@@ -1,4 +1,4 @@
-const Transaction = require('../models/transaction');
+const Transaction = require('../models/Transaction');
 
 // Tambah transaksi
 exports.addTransaction = async (req, res) => {
